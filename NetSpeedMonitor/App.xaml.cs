@@ -62,7 +62,8 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
                 // These arguments is used when program restart. Will firstly show the window of detail of specific process.
                 else if (e.Args.Length == 2 && e.Args[0] == "-processid")
                 {
-                    if (Int32.TryParse(e.Args[1], out int id))
+                    int id;
+                    if (Int32.TryParse(e.Args[1], out id))
                     {
                         ProcessDetailWindow w = new ProcessDetailWindow(id);
                         Dispatcher.InvokeAsync(new Action(() => { w.Show(); }));
@@ -70,7 +71,8 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
                 }
             }
 
-            mutex = new Mutex(true, "USTC.Software.hanyizhao.NetSpeedMonitor", out bool createNew);
+            bool createNew;
+            mutex = new Mutex(true, "USTC.Software.hanyizhao.NetSpeedMonitor", out createNew);
 
             // There is no instance until now.
             if (createNew)
@@ -325,10 +327,12 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
 
         private void TrayMenu_Change_Transparency_Click(object sender, EventArgs e)
         {
-            if(sender is System.Windows.Forms.MenuItem i)
+            if(sender is System.Windows.Forms.MenuItem)
             {
-                if(!i.Checked && i.Tag is int newTransparency)
+                var i = sender as System.Windows.Forms.MenuItem;
+                if (!i.Checked && i.Tag is int)
                 {
+                    int newTransparency = (int)i.Tag;
                     TryToSetTransparency(newTransparency);
                 }
             }
@@ -336,10 +340,12 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
 
         private void TrayMenu_Change_Language_Click(object sender, EventArgs e)
         {
-            if (sender is System.Windows.Forms.MenuItem i)
+            if (sender is System.Windows.Forms.MenuItem)
             {
-                if (!i.Checked && i.Tag is String path)
+                var i = sender as System.Windows.Forms.MenuItem;
+                if (!i.Checked && i.Tag is string)
                 {
+                    var path = (string)i.Tag;
                     TryToSetLanguage(path);
                 }
             }
@@ -371,8 +377,9 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
             {
                 foreach(System.Windows.Forms.MenuItem item in menuTransparency.MenuItems)
                 {
-                    if(item.Tag is int myTag)
+                    if(item.Tag is int)
                     {
+                        var myTag = (int)item.Tag;
                         item.Checked = myTag == transparency;
                     }
                 }

@@ -44,8 +44,9 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
             request.UserAgent = "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; InfoPath.2; AskTbPTV/5.17.0.25589; Alexa Toolbar)";
             try
             {
-                if (request.GetResponse() is HttpWebResponse response)
+                if (request.GetResponse() is HttpWebResponse)
                 {
+                    var response = request.GetResponse() as HttpWebResponse;
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         using (StreamReader reader = new StreamReader(response.GetResponseStream()))

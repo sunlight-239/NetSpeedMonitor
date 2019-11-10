@@ -33,7 +33,8 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
         {
             lock(lockMap)
             {
-                if(map.TryGetValue(run, out Timer timer))
+                Timer timer;
+                if (map.TryGetValue(run, out timer))
                 {
                     map.Remove(run);
                     reverseMap.Remove(timer);

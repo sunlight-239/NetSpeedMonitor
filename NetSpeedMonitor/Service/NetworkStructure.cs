@@ -56,7 +56,8 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
         {
             lock(this)
             {
-                if (!cache.TryGetValue(address, out PacketFlow result))
+                PacketFlow result;
+                if (!cache.TryGetValue(address, out result))
                 {
                     result = new PacketFlow();
                     if (myIPSet.Contains(address.source))
@@ -190,8 +191,9 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
             {
                 return true;
             }
-            if (obj is PacketAddress y)
+            if (obj is PacketAddress)
             {
+                var y = obj as PacketAddress;
                 return source == y.source && destination == y.destination
                     && sourcePort == y.sourcePort && destinationPort == y.destinationPort;
             }

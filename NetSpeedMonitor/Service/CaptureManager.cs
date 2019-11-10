@@ -81,8 +81,9 @@ namespace USTC.Software.hanyizhao.NetSpeedMonitor
         {
             foreach (ICaptureDevice i in devices)
             {
-                if (i is LibPcapLiveDevice d)
+                if (i is LibPcapLiveDevice)
                 {
+                    var d = i as LibPcapLiveDevice;
                     StartDevice(d);
                 }
             }
